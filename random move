@@ -1,0 +1,43 @@
+#version to move mouse at random intervals, with random movements, and a random number of movements.
+import pyautogui
+import time
+import sys
+import random
+from datetime import datetime
+
+pyautogui.FAILSAFE = False
+
+# Default minimum steps and sleep range
+min_steps = 10
+max_steps = 30
+sleep_min = 30
+sleep_max = 300
+
+# # Get number of steps from command line 
+# if len(sys.argv) > 1 and sys.argv[1].isdigit() and int(sys.argv[1]) >= min_steps:
+#     steps = int(sys.argv[1])
+# else:
+#     steps = min_steps
+
+# Get screen size for random positions
+screen_width, screen_height = pyautogui.size()
+
+while True:
+    # Random sleep between 30s and 300s
+    wait_time = random.randint(sleep_min, sleep_max)
+    print(f"Sleeping for {wait_time} seconds...")
+    time.sleep(wait_time)
+
+    steps = random.randint(min_steps, max_steps)
+
+    # Perform random mouse movements
+    print(f"Starting {steps} random movements...")
+    for i in range(steps):
+        x = random.randint(0, screen_width - 1)
+        y = random.randint(0, screen_height - 1)
+        pyautogui.moveTo(x, y, duration=random.uniform(0.1, 0.5))  # Smooth movement
+    # Press Shift a few times
+    for i in range(3):
+        pyautogui.press("shift")
+
+    print(f"Movement made at {datetime.now().time()}")
